@@ -1,6 +1,9 @@
-from asyncio import sleep
-
+import time
+import os
 import numpy as np
+import pygame
+import sys
+
 import src.player as player
 from src.configs import *
 
@@ -45,17 +48,32 @@ class Game:
         self.score = 0
         self.moves_count = 0
 
-    def draw(self):
+    def draw(self, window):
         status = ""
         for i in range(MAX_POSITION + 1):
             if self.player.position == i:
                 status += 'P'
+                color = BLACK
             elif MIN_POSITION == i:
                 status += 'O'
+                color = BLUE
             elif MAX_POSITION == i:
                 status += 'C'
+                color = RED
             else:
                 status += '#'
+                color = WHITE
+
+            rect = pygame.Rect(i * BLOCK_SIZE, 50, BLOCK_SIZE, BLOCK_SIZE)
+            pygame.draw.rect(window, color, rect)
+
+            # Add text label
+            myfont = pygame.font.SysFont("monospace", 50)
+
+            label_status = myfont.render(status, 1, BLACK)
+            label_moves = myfont.render("Number of moves: " + str(self.moves_count), 1, BLACK)
+            window.blit(label_status,(40, 100))
+            window.blit(label_moves,(40, 200))
+
         if self.score == 5:
             print(status, " ", self.score, " Number of moves: ", self.moves_count)
-        sleep(500)
