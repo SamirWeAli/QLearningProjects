@@ -47,7 +47,7 @@ class Game:
 
     def draw(self):
         status = ""
-        for i in range(MAX_POSITION+1):
+        for i in range(MAX_POSITION + 1):
             if self.player.position == i:
                 status += 'P'
             elif MIN_POSITION == i:
@@ -56,9 +56,6 @@ class Game:
                 status += 'C'
             else:
                 status += '#'
-        print(status, " ", self.score)
+        if self.score == 5:
+            print(status, " ", self.score, " Number of moves: ", self.moves_count)
         sleep(500)
-
-
-
-
